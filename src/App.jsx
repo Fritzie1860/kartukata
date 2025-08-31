@@ -1,18 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const WORDS = [
-  { word: "efusi", synonym: "pencurahan" },
-  { word: "abstrak", synonym: "tidak nyata" },
-  { word: "kompeten", synonym: "mampu" },
-  { word: "produktif", synonym: "berdaya guna" },
-  { word: "ramah", synonym: "sopan" },
-  { word: "valid", synonym: "sah" },
-  { word: "tegas", synonym: "keras" },
-  { word: "cepat", synonym: "kilat" },
-  { word: "fleksibel", synonym: "lentur" },
-  { word: "efisien", synonym: "hemat" },
-];
+import { WORDS } from "./data/words";
 
 function shuffleArray(array) {
   const arr = array.slice();
@@ -52,132 +40,200 @@ export default function FlashcardSingle() {
     }
   }
 
+  function prevCard() {
+    if (currentIndex > 0) {
+      setDirection(-1);
+      setFlipped(false);
+      setCurrentIndex(currentIndex - 1);
+    }
+  }
   const card = cards[currentIndex];
 
   return (
-    <div style={{ padding: 20, fontFamily: "Inter, system-ui, Arial", textAlign: "center" }}>
-      <div style={{ marginBottom: 12 }}>
-        <label>Jumlah kartu: </label>
-        <input
-          type="number"
-          value={limit}
-          min={1}
-          max={WORDS.length}
-          onChange={(e) => setLimit(Number(e.target.value || 1))}
-          style={{ width: 60, marginLeft: 6 }}
-        />
-      </div>
+    <div
+      style={{
+        minHeight: "100vh",        
+        display: "flex",           
+        justifyContent: "center",  
+        alignItems: "center",     
+        fontFamily: "Inter, system-ui, Arial",
+        background: "#f9fafb",     
+      }}
+    >
+      {/* Bungkus semua konten dalam card-container */}
+      <div style={{ textAlign: "center", padding: 20 }}>
+        {/* Input jumlah kartu */}
+        <div 
+          style={{ 
+            marginBottom: 12
+          }}
+        >
+          <label>Jumlah kartu: </label>
+          <input
+            type="number"
+            value={limit}
+            min={1}
+            max={WORDS.length}
+            onChange={(e) => setLimit(Number(e.target.value || 1))}
+            style={{ width: 60, marginLeft: 6, borderRadius: 5 }}
+          />
+        </div>
 
-      {/* Flashcard */}
-      <div
-        style={{
-          perspective: 1000,
-          width: 250,
-          height: 350,
-          margin: "0 auto",
-          cursor: "pointer",
-        }}
-      >
-        <AnimatePresence mode="wait" custom={direction}>
-          <motion.div
-            key={currentIndex} // penting biar AnimatePresence detect perubahan
-            onClick={() => setFlipped(!flipped)}
-            initial={{ opacity: 0, x: 100 * direction, rotate: 15 * direction }}
-            animate={{
-              opacity: 1,
-              x: 0,
-              rotate: 0,
-              rotateY: flipped ? 180 : 0,
-              transition: { duration: 0.6 },
-            }}
-            exit={{
-              opacity: 0,
-              x: -100 * direction,
-              rotate: -15 * direction,
-              transition: { duration: 0.4 },
-            }}
+        {/* Flashcard */}
+        <div
+          style={{
+            perspective: 1000,
+            width: 250,
+            height: 350,
+            margin: "0 auto",
+            cursor: "pointer",
+          }}
+        >
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.div
+              key={currentIndex}
+              onClick={() => setFlipped(!flipped)}
+              initial={{ opacity: 0, x: 100 * direction, rotate: 15 * direction }}
+              animate={{
+                opacity: 1,
+                x: 0,
+                rotate: 0,
+                rotateY: flipped ? 180 : 0,
+                transition: { duration: 0.6 },
+              }}
+              exit={{
+                opacity: 0,
+                x: -100 * direction,
+                rotate: -15 * direction,
+                transition: { duration: 0.4 },
+              }}
+              style={{
+                position: "relative",
+                width: "100%",
+                height: "100%",
+                transformStyle: "preserve-3d",
+              }}
+            >
+              {/* Front */}
+              <div class="shadow-lg"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backfaceVisibility: "hidden",
+                  borderRadius: 16,
+                  background: "#bae6fd",
+                  color: "#1E7082",
+                  fontSize: 24,
+                  fontWeight: 700,
+                  boxShadow: "0 4px 8px rgba(0,0,0,0.2)"
+                }}
+              >
+                {card.word}
+              </div>
+
+              {/* Back */}
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backfaceVisibility: "hidden",
+                  borderRadius: 16,
+                  background: "#e9d5ff",
+                  color: "#7A3481",
+                  fontSize: 22,
+                  fontWeight: 700,
+                  transform: "rotateY(180deg)",
+                  boxShadow: "0 4px 8px rgba(0,0,0,0.2)"
+                }}
+              >
+                {card.synonym}
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Counter */}
+        <p style={{ marginTop: 16, fontSize: 14 }}>
+          <span style={{fontWeight: "bold", color:"#10b981"}}>{currentIndex + 1}</span> dari <span style={{fontWeight: "bold", color:"#10b981"}}>{cards.length}</span> kartu
+        </p>
+
+        {/* Buttons */}
+        <div style={{ display: "flex", justifyContent: "center", gap: 12, marginTop: 20 }}>
+          <button
+            onClick={prevCard}
+            disabled={currentIndex <= 0}
             style={{
-              position: "relative",
-              width: "100%",
-              height: "100%",
-              transformStyle: "preserve-3d",
+              padding: "8px 16px",
+              borderRadius: 8,
+              background: currentIndex <= 0 ? "#9ca3af" : "#10b981",
+              color: "white",
+              border: "none",
+              cursor: currentIndex <= 0 ? "not-allowed" : "pointer",
+              boxShadow: currentIndex <= 0 ? "none" : "0 4px 6px rgba(0,0,0,0.2)",
+              transition: "all 0.15s ease-in-out",
+            }}
+            onMouseDown={(e) => {
+              if (currentIndex > 0) e.currentTarget.style.transform = "scale(0.95)";
+            }}
+            onMouseUp={(e) => {
+              e.currentTarget.style.transform = "scale(1)";
             }}
           >
-            {/* Front */}
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                backfaceVisibility: "hidden",
-                borderRadius: 16,
-                background: "#bae6fd",
-                fontSize: 24,
-                fontWeight: 700,
-              }}
-            >
-              {card.word}
-            </div>
-
-            {/* Back */}
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                backfaceVisibility: "hidden",
-                borderRadius: 16,
-                background: "#e9d5ff",
-                fontSize: 22,
-                fontWeight: 700,
-                transform: "rotateY(180deg)",
-              }}
-            >
-              {card.synonym}
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* Counter */}
-      <p style={{ marginTop: 16 }}>
-        {currentIndex + 1} dari {cards.length} kartu
-      </p>
-
-      {/* Buttons */}
-      <div style={{ display: "flex", justifyContent: "center", gap: 12 }}>
-        <button
-          onClick={nextCard}
-          disabled={currentIndex >= cards.length - 1}
-          style={{
-            padding: "8px 16px",
-            borderRadius: 8,
-            background: "#10b981",
-            color: "white",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-          Next
-        </button>
-        <button
-          onClick={handleShuffle}
-          style={{
-            padding: "8px 16px",
-            borderRadius: 8,
-            background: "#f59e0b",
-            color: "#111",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-          Acak ulang
-        </button>
+            ◀
+          </button>
+          <button
+            onClick={nextCard}
+            disabled={currentIndex >= cards.length - 1}
+            style={{
+              padding: "8px 16px",
+              borderRadius: 8,
+              background: currentIndex >= cards.length - 1 ? "#9ca3af" : "#10b981",
+              color: "white",
+              border: "none",
+              cursor: currentIndex >= cards.length - 1 ? "not-allowed" : "pointer",
+              boxShadow: currentIndex >= cards.length - 1 ? "none" : "0 4px 6px rgba(0,0,0,0.2)",
+              transition: "all 0.15s ease-in-out",
+            }}
+            onMouseDown={(e) => {
+              if (currentIndex < cards.length - 1) e.currentTarget.style.transform = "scale(0.95)";
+            }}
+            onMouseUp={(e) => {
+              e.currentTarget.style.transform = "scale(1)";
+            }}
+          >
+            ▶
+          </button>
+          <button
+            onClick={handleShuffle}
+            style={{
+              padding: "8px 16px",
+              borderRadius: 8,
+              background: "#C6EBD9",
+              color: "#23955E",
+              border: "none",
+              cursor: currentIndex >= cards.length - 1 ? "not-allowed" : "pointer",
+              boxShadow: currentIndex >= cards.length - 1 ? "none" : "0 4px 6px rgba(0,0,0,0.2)",
+              transition: "all 0.15s ease-in-out"
+            }}
+              onMouseDown={(e) => {
+              if (currentIndex < cards.length - 1) e.currentTarget.style.transform = "scale(0.95)";
+            }}
+              onMouseUp={(e) => {
+              e.currentTarget.style.transform = "scale(1)";
+            }}
+          >
+            acak ulang
+          </button>
+        </div>
       </div>
     </div>
   );
 }
+
+
