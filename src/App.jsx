@@ -68,7 +68,20 @@ export default function FlashcardSingle() {
             marginBottom: 12
           }}
         >
-          <label>Jumlah kartu: </label>
+          <h1
+            style={{
+              fontSize: 32,
+              fontWeight: 700,
+              letterSpacing: "2px",
+              textAlign: "center",
+              marginBottom: 20,
+              color: "#1E7082", 
+              textShadow: "1px 1px 3px rgba(0,0,0,0.1)"
+            }}
+          >
+            SINONIM
+          </h1>
+          <label style={{ marginTop: 16}}>Jumlah kartu: </label>
           <input
             type="number"
             value={limit}
