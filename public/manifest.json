@@ -1,0 +1,20 @@
+{
+  "name": "Kartu Kata",
+  "short_name": "KartuKata",
+  "start_url": "/kartukata/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2B499E",
+  "icons": [
+    {
+      "src": "/kartukata/athena.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/kartukata/athena.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

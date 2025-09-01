@@ -14,7 +14,8 @@ export default function App() {
       <Route path="/analogi" element={<div>Halaman Analogi (coming soon)</div>} />
 
       {/* default redirect ke /menu */}
-      <Route path="*" element={<Menu />} />
+      <Route path="*" element={<Navigate to="/menu" replace />} />
+
     </Routes>
   );
 }
