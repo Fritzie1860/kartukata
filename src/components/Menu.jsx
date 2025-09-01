@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Menu.module.css";
+import Footer from "./Footer.jsx";
 
 export default function Menu() {
   const navigate = useNavigate();
@@ -20,16 +21,7 @@ export default function Menu() {
           ANALOGI
         </button>
       </div>
-
-      <a 
-        href="https://www.linkedin.com/in/fritzie-primananda"
-        target="_blank"
-        rel="noopener noreferrer"
-        className={styles.footerLink}
-        >
-        <p className={styles.footer}>@primananda.fritzie</p>
-    </a>
-
+      <Footer/>
     </div>
   );
 }

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { SINONIM } from "../data/words-sinonim";               
-import styles from "./Sinonim.module.css";           
+import { ANTONIM } from "../data/words-antonim";               
+import styles from "./Antonim.module.css";           
 import { useNavigate } from "react-router-dom"; 
-import { ArrowLeft } from "lucide-react";       
-import Footer from "./Footer.jsx";
+import { ArrowLeft } from "lucide-react";     
+import Footer from "./Footer.jsx";  
 
 function shuffleArray(array) {
   const arr = array.slice();
@@ -17,22 +17,22 @@ function shuffleArray(array) {
 
 export default function Sinonim() {
   const [limit, setLimit] = useState(10);
-  const [cards, setCards] = useState(() => shuffleArray(SINONIM).slice(0, 10));
+  const [cards, setCards] = useState(() => shuffleArray(ANTONIM).slice(0, 10));
   const [currentIndex, setCurrentIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [direction, setDirection] = useState(1);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const n = Math.max(1, Math.min(limit || 1, SINONIM.length));
-    setCards(shuffleArray(SINONIM).slice(0, n));
+    const n = Math.max(1, Math.min(limit || 1, ANTONIM.length));
+    setCards(shuffleArray(ANTONIM).slice(0, n));
     setCurrentIndex(0);
     setFlipped(false);
   }, [limit]);
 
   function handleShuffle() {
-    const n = Math.max(1, Math.min(limit || 1, SINONIM.length));
-    setCards(shuffleArray(SINONIM).slice(0, n));
+    const n = Math.max(1, Math.min(limit || 1, ANTONIM.length));
+    setCards(shuffleArray(ANTONIM).slice(0, n));
     setCurrentIndex(0);
     setFlipped(false);
   }
@@ -53,7 +53,7 @@ export default function Sinonim() {
     }
   }
 
-  const card = cards[currentIndex] || { word: "-", synonym: "-" };
+  const card = cards[currentIndex] || { word: "-", antonym: "-" };
 
   return (
     <div className={styles.container}>
@@ -64,13 +64,13 @@ export default function Sinonim() {
         ><ArrowLeft size={18}/> 
         </button>
         <div className={styles.inputWrapper}>
-          <h1 className={styles.title}>SINONIM</h1>
+          <h1 className={styles.title}>ANTONIM</h1>
           <label>Jumlah kartu: </label>
           <input
             type="number"
             value={limit}
             min={1}
-            max={SINONIM.length}
+            max={ANTONIM.length}
             onChange={(e) => setLimit(Number(e.target.value || 1))}
             className={styles.input}
           />
@@ -98,7 +98,7 @@ export default function Sinonim() {
               className={styles.card}
             >
               <div className={styles.front}>{card.word}</div>
-              <div className={styles.back}>{card.synonym}</div>
+              <div className={styles.back}>{card.antonym}</div>
             </motion.div>
           </AnimatePresence>
         </div>
@@ -129,7 +129,6 @@ export default function Sinonim() {
             acak ulang
           </button>
         </div>
-
         <Footer/>
       </div>
     </div>

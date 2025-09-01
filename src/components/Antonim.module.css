@@ -1,0 +1,148 @@
+/* Antonim.module.css */
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Inter, system-ui, Arial;
+  background: #f9fafb;
+}
+
+.inner {
+  text-align: center;
+  padding: 20px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #7a3481;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.inputWrapper {
+  margin-bottom: 12px;
+}
+
+.input {
+  width: 60px;
+  margin-left: 6px;
+  border-radius: 5px;
+  padding: 2px 4px;
+}
+
+.cardContainer {
+  perspective: 1000px;
+  width: 250px;
+  height: 350px;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.front,
+.back {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  font-size: 24px;
+  font-weight: 700;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.front {
+  background: #e9d5ff;
+  color: #7a3481;
+}
+
+.back {
+  background: #bae6fd;
+  color: #1e7082;
+  font-size: 22px;
+  transform: rotateY(180deg);
+}
+
+.counter {
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.counter span {
+  font-weight: bold;
+  color: #10b981;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+.button:active {
+  transform: scale(0.95);
+}
+
+.prev {
+  background: #10b981;
+}
+
+.prev:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.next {
+  background: #10b981;
+}
+
+.next:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.shuffle {
+  background: #c6ebd9;
+  color: #23955e;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: #555;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+.backButton:hover {
+  color: #000;
+}
