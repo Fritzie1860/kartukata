@@ -130,3 +130,19 @@
   background: #c6ebd9;
   color: #23955e;
 }
+
+.backButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: #555;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+.backButton:hover {
+  color: #000;
+}

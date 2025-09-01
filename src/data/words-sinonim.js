@@ -1,4 +1,4 @@
-export const WORDS = [
+export const SINONIM = [
   { word: "efusi", synonym: "pencurahan" },
   { word: "abstrak", synonym: "tidak nyata" },
   { word: "kompeten", synonym: "mampu" },

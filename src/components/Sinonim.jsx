@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { WORDS } from "../data/words";               
+import { SINONIM } from "../data/words-sinonim";               
 import styles from "./Sinonim.module.css";           
+import { useNavigate } from "react-router-dom"; 
+import { ArrowLeft } from "lucide-react";       
 
 function shuffleArray(array) {
   const arr = array.slice();
@@ -14,21 +16,22 @@ function shuffleArray(array) {
 
 export default function Sinonim() {
   const [limit, setLimit] = useState(10);
-  const [cards, setCards] = useState(() => shuffleArray(WORDS).slice(0, 10));
+  const [cards, setCards] = useState(() => shuffleArray(SINONIM).slice(0, 10));
   const [currentIndex, setCurrentIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
   const [direction, setDirection] = useState(1);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const n = Math.max(1, Math.min(limit || 1, WORDS.length));
-    setCards(shuffleArray(WORDS).slice(0, n));
+    const n = Math.max(1, Math.min(limit || 1, SINONIM.length));
+    setCards(shuffleArray(SINONIM).slice(0, n));
     setCurrentIndex(0);
     setFlipped(false);
   }, [limit]);
 
   function handleShuffle() {
-    const n = Math.max(1, Math.min(limit || 1, WORDS.length));
-    setCards(shuffleArray(WORDS).slice(0, n));
+    const n = Math.max(1, Math.min(limit || 1, SINONIM.length));
+    setCards(shuffleArray(SINONIM).slice(0, n));
     setCurrentIndex(0);
     setFlipped(false);
   }
@@ -54,6 +57,11 @@ export default function Sinonim() {
   return (
     <div className={styles.container}>
       <div className={styles.inner}>
+        <button 
+          onClick={() => navigate("/menu")} 
+          className={styles.backButton}
+        ><ArrowLeft size={18}/> 
+        </button>
         <div className={styles.inputWrapper}>
           <h1 className={styles.title}>SINONIM</h1>
           <label>Jumlah kartu: </label>
@@ -61,7 +69,7 @@ export default function Sinonim() {
             type="number"
             value={limit}
             min={1}
-            max={WORDS.length}
+            max={SINONIM.length}
             onChange={(e) => setLimit(Number(e.target.value || 1))}
             className={styles.input}
           />
