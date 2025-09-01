@@ -1,6 +1,6 @@
 {
-  "name": "Kartu Kata",
-  "short_name": "KartuKata",
+  "name": "kartukata",
+  "short_name": "kartukata",
   "start_url": "/kartukata/",
   "display": "standalone",
   "background_color": "#ffffff",
